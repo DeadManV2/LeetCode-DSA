@@ -15,20 +15,16 @@ class Solution {
             dfs(dirX, dirY, vis, grid, m, n);
         }
        }
-
-
-
     }
     public int numIslands(char[][] grid) {
 
         int m = grid.length;
         int n = grid[0].length;
         boolean[][] vis = new boolean[m][n];
-
         for(boolean[] t : vis){
             Arrays.fill(t, false);
         }
-       int cnt  = 0;
+        int cnt  = 0;
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
 
