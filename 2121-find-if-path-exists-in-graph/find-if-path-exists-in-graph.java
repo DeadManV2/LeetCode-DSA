@@ -5,14 +5,13 @@ class Solution {
         vis[src] = true;
         while(!queue.isEmpty()){
             int cu = queue.poll();
-            for(int i = 0; i < g[cu].size(); i++ ){
-                int cv = g[cu].get(i);
+            for(int cv : g[cu]){
                 if(vis[cv] == false){
                     queue.offer(cv);
-                    vis[cv] = true;    
-                    
+                    vis[cv] = true;
                 }
             }
+ 
         }
         return vis[dest];
 
