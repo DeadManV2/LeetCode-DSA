@@ -4,9 +4,10 @@ class Solution {
        grid[i][j] = '0';
        int[] dx = {1,0,-1,0};
        int[] dy = {0,1,0,-1};
-       for(int d = 0; d < 4; d++){
-        int dirX = i + dx[d];
-        int dirY = j + dy[d];
+       int[][] dir = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+       for(int[] d : dir){
+        int dirX = i + d[0];
+        int dirY = j + d[1];
         if(dirX < 0 || dirX >= m || dirY < 0 || dirY >=n ){
             continue;
         }
