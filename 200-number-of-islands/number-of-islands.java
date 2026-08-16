@@ -1,8 +1,7 @@
 class Solution {
-    public void dfs(int i , int j , boolean[][] vis, char[][] grid, int m, int n){
+    public void dfs(int i , int j , char[][] grid, int m, int n){
 
-        if(vis[i][j] == true) return;
-        vis[i][j] = true;
+       grid[i][j] = '0';
        int[] dx = {1,0,-1,0};
        int[] dy = {0,1,0,-1};
        for(int d = 0; d < 4; d++){
@@ -12,7 +11,7 @@ class Solution {
             continue;
         }
         if(grid[dirX][dirY] == '1'){
-            dfs(dirX, dirY, vis, grid, m, n);
+            dfs(dirX, dirY, grid, m, n);
         }
        }
     }
@@ -20,16 +19,12 @@ class Solution {
 
         int m = grid.length;
         int n = grid[0].length;
-        boolean[][] vis = new boolean[m][n];
-        for(boolean[] t : vis){
-            Arrays.fill(t, false);
-        }
         int cnt  = 0;
         for(int i = 0; i < m; i++) {
             for(int j = 0; j < n; j++) {
 
-                if(grid[i][j] == '1' && vis[i][j] == false){
-                    dfs(i, j, vis, grid, m, n);
+                if(grid[i][j] == '1'){
+                    dfs(i, j, grid, m, n);
                     cnt++;
                 }
             }
