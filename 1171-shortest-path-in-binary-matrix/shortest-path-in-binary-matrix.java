@@ -37,6 +37,7 @@ class Solution {
 
             }
         }
+        System.out.println(time[n-1][n-1]);
         return time[n-1][n-1] == Integer.MAX_VALUE ? -1 : time[n-1][n-1];
     }
 }
