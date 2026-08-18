@@ -1,43 +1,45 @@
 class Solution {
-    static record Pair(int time, int row, int col){
+    static record Pair(int row, int col){
 
     }
     public int shortestPathBinaryMatrix(int[][] grid) {
         if(grid[0][0] == 1) return -1;
         int n = grid.length;
-        int[][] time = new int[n][n];
-        for(int[] t : time) {
-            Arrays.fill(t, Integer.MAX_VALUE);
-        }
-        time[0][0] = 1;
-        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1},{1,1},{-1,1},{-1,-1},{1,-1}};
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.time() - b.time());
-        pq.offer(new Pair(1,0,0));
+        if(grid[n-1][n-1] == 1) return -1;
+        Queue<Pair> pq = new LinkedList<>();
+        pq.offer(new Pair(0,0));
+
+        int[][] dir ={
+            {1,0},{0,1},{-1,0},{0,-1},
+            {1,1},{-1,-1},{-1,1},{1,-1}
+        };
+        int dist = 1;
         while(!pq.isEmpty()) {
-            Pair p = pq.poll();
-            int t = p.time;
-            int i = p.row;
-            int j = p.col;
-            if(t > time[i][j]){
-                continue;
-            }
+        int size = pq.size();
+
+        for(int i = 0; i < size; i++)
+        {
+            Pair  p = pq.poll();
+            int x = p.row();
+            int y = p.col();
+            if(x == n-1 && y == n-1) return dist;
+            System.out.print(x+ " " + y);
             for(int[] d : dir) {
-                int nrow = i + d[0];
-                int ncol = j + d[1];
+                int nrow = x + d[0];
+                int ncol = y + d[1];
                 if(nrow < 0 || nrow >= n || ncol < 0 || ncol >=n) {
                     continue;
                 }
-                
                 if(grid[nrow][ncol] == 0){
-                    if(time[nrow][ncol] > t + 1){
-                        time[nrow][ncol] = t + 1;
-                        pq.offer(new Pair(t + 1, nrow, ncol));
-                    }
+                    System.out.println(nrow + " -> " + ncol);
+                    grid[nrow][ncol] = 1;
+                    pq.offer(new Pair(nrow, ncol));
                 }
-
             }
         }
-        System.out.println(time[n-1][n-1]);
-        return time[n-1][n-1] == Integer.MAX_VALUE ? -1 : time[n-1][n-1];
+        dist++;
+       }
+       return -1;
+
     }
 }
