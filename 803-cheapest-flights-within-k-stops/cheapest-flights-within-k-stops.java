@@ -38,7 +38,7 @@ class Solution {
                 int newCost = cost + w;
                 if(newCost < dest[v][stop]) {
                     dest[v][stop] = newCost;
-                    pq.offer(new State(newCost, v,stop));
+                    pq.offer(new State(newCost, v, stop));
                 }
 
             }
