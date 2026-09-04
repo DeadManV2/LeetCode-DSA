@@ -8,13 +8,17 @@ class Solution {
         for (int i = n - 2; i >= 0; i--) {
             suffixMin[i] = Math.min(nums[i], suffixMin[i + 1]);
         }
-
-        int prefixMax = nums[0];
+        
+        int prefixMax[] = new int[n];
+         prefixMax[0] = nums[0];
+        for(int i = 1; i < n; i++){
+            prefixMax[i] = Math.max(nums[i],prefixMax[i-1]);
+        }
 
         for (int i = 0; i < n; i++) {
-            prefixMax = Math.max(prefixMax, nums[i]);
+          
 
-            int instability = prefixMax - suffixMin[i];
+            int instability = prefixMax[i] - suffixMin[i];
 
             if (instability <= k) {
                 return i;
