@@ -1,7 +1,5 @@
 class Solution {
-    void twoSum(int n, long target, int[] n3, int[] n4){
 
-    }
     public int fourSumCount(int[] n1, int[] n2, int[] n3, int[] n4) {
 
         int n = n1.length;
