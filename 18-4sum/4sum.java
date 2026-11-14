@@ -1,49 +1,40 @@
 class Solution {
-List<List<Integer> >  res = new ArrayList<>();
-    void twoSum(int[] nums, long target, int n1, int n2, int l, int h){
-        
-        while(l < h) {
-            long sum = (long)n1 + n2 + nums[l] + nums[h];
-            if(sum == target){
+    private List<List<Integer>> res = new ArrayList<>();
+    void twoSum(int[] nums, int target, int a, int b, int l, int r) {
 
-                List<Integer> ans = new ArrayList<>();
-                ans.add(n1);
-                ans.add(n2);
-                ans.add(nums[l]);
-                ans.add(nums[h]);
-
-
-
-                res.add(ans);
-                while(l < h && nums[l] == nums[l + 1]) l++;
-                while(l < h && nums[h] == nums[h-1]) h--;
+        while(l < r) {
+            long sum = (long) a + b + nums[l] + nums[r];
+            if(sum == target) {
+                while(l < r && nums[l] == nums[l + 1]) l++;
+                while(l < r && nums[r] == nums[r-1]) r--;
+                List<Integer> tmp = new ArrayList<>();
+                tmp.add(a);
+                tmp.add(b);
+                tmp.add(nums[l]);
+                tmp.add(nums[r]);
+                res.add(tmp);
                 l++;
-                h--;
+                r--;
             }
-            else if(sum < target){
+            else if(sum < target) {
                 l++;
             }
-            else {
-                h--;
-            }
-
+            else r--;
         }
     }
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        
-        
-        Arrays.sort(nums);
         int n = nums.length;
+        if(n < 4) return new ArrayList<>();
+        Arrays.sort(nums);
 
-       for(int i = 0; i < n - 3; i++){
-       if(i > 0 && nums[i] == nums[i-1] ) continue;
-        for(int j =  i + 1; j < n - 2; j++){
-          if(j > i+1 && nums[j] == nums[j-1]) continue;
-        
-            twoSum(nums, target,nums[i], nums[j] ,j + 1, n - 1);
+        for(int i = 0; i < n - 3; i++){
+            if(i > 0 && nums[i-1] == nums[i]) continue;
+            for(int j = i + 1; j < n - 2; j++) {
+                if(j > i + 1 && nums[j] == nums[j-1]) continue;
+                twoSum(nums, target, nums[i], nums[j], j + 1, n - 1);
+            }
         }
-       }
-      return res;
+        return res;
         
     }
 }
