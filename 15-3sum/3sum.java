@@ -1,42 +1,42 @@
 class Solution {
-    private List<List<Integer>> res = new ArrayList<>();
-    void twoSum(int[] nums, int target, int i, int j){
-       
-        while(i < j) {
-            if(nums[i] + nums[j] < target) {
-                i++;
+    void twoSum(int[] nums, int l, int r, int target, List<List<Integer>> res) {
+
+        while(l < r) {
+            long sum =  (long) nums[l] + nums[r];
+            if(sum == target) {
+                while(l < r && nums[l] == nums[l+1]) l++;
+                while(l < r && nums[r] == nums[r-1]) r--;
+
+                List<Integer> tmp = new ArrayList<>();
+                tmp.add(-target);
+                tmp.add(nums[l]);
+                tmp.add(nums[r]);
+                res.add(tmp);
+                l++;
+                r--;
+                
             }
-            else if(nums[i] + nums[j] > target){
-                j--;
+            else if( sum  < target) {
+                l++;
             }
-            else {
-                while(i < j && nums[i] == nums[i+1]) i++;
-                while(i < j && nums[j] == nums[j-1]) j--;
-                 List<Integer> ans = new ArrayList<>();
-                 ans.add(-target);
-                 ans.add(nums[i]);
-                 ans.add(nums[j]);
-                 res.add(ans);
-                 
-                 i++;
-                 j--;
-            
-            }
+            else r--;
         }
-         
+        return;
     }
+
     public List<List<Integer>> threeSum(int[] nums) {
 
         Arrays.sort(nums);
         int n = nums.length;
         if(n < 3) return new ArrayList<>();
-        for(int i = 0 ; i < n; i++) {
-            if(i > 0 && nums[i] == nums[i-1]){
-                continue;
-            }
-            int n1 = -nums[i];
-            int target = n1;
-            twoSum(nums, target, i + 1, n - 1);
+        List<List<Integer>> res = new ArrayList<>();
+
+        for(int i = 0; i < n; i++ ){
+            if(i > 0 && nums[i-1] == nums[i]) continue;
+            int target = -nums[i];
+
+            twoSum(nums, i + 1, n - 1, target, res);
+
         }
         return res;
         
