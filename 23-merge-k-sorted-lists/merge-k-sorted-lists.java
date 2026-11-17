@@ -1,55 +1,33 @@
+
 class Solution {
-     public ListNode getMiddle(ListNode head) {
+    private static record Pair(int val, ListNode node){
 
-        ListNode slow = head;
-        ListNode fast = head.next;
-
-        while (fast != null && fast.next != null) {
-
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        return slow;
     }
-   public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-
-        ListNode dummy = new ListNode(-1);
-        ListNode curr = dummy;
-
-        while (list1 != null && list2 != null) {
-
-            if (list1.val <= list2.val) {
-                curr.next = list1;
-                list1 = list1.next;
-            } else {
-                curr.next = list2;
-                list2 = list2.next;
-            }
-
-            curr = curr.next;
-        }
-
-        if (list1 != null) {
-            curr.next = list1;
-        } else {
-            curr.next = list2;
-        }
-
-        return dummy.next;
-    }
-
     public ListNode mergeKLists(ListNode[] lists) {
-
         if(lists.length < 1) return null;
 
-        ListNode head = lists[0];
+        PriorityQueue<Pair> pq = new PriorityQueue<>(
+            (a, b) -> Integer.compare(a.val(), b.val())
+        );
 
-        for(int i =  1;  i < lists.length; i++) {
-            head = mergeTwoLists(head, lists[i]);
+        ListNode dummy = new ListNode(-1);
+        ListNode tmp = dummy;
+
+        for(int i = 0; i < lists.length; i++) {
+            if(lists[i] != null){
+            pq.offer(new Pair(lists[i].val, lists[i]));
+            }
         }
-        return head;
 
+        while(!pq.isEmpty()) {
+            Pair p = pq.poll();
+            int val = p.val();
+            ListNode node = p.node();
+            tmp.next = node;
+            if(node.next != null) pq.offer(new Pair(node.next.val, node.next));
+            tmp = tmp.next;
+        }
+       return dummy.next;
         
     }
 }
