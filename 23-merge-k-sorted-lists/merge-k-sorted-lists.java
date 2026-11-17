@@ -4,7 +4,7 @@ class Solution {
 
     }
     public ListNode mergeKLists(ListNode[] lists) {
-        if(lists.length < 1) return null;
+        
 
         PriorityQueue<Pair> pq = new PriorityQueue<>(
             (a, b) -> Integer.compare(a.val(), b.val())
