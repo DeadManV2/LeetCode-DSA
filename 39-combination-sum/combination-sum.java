@@ -1,31 +1,53 @@
+
+import java.util.*;
+
 class Solution {
-    private int n;
-    private void solve(int[] a, int target, int idx, List<List<Integer>> res, List<Integer> tmp){
-        if(idx == n) {
-        if(target == 0) {
-            res.add(new ArrayList<>(tmp));
-           
-        }
-         return ;
-        }
-        if(a[idx] <= target) {
-            target -= a[idx];
-            tmp.add(a[idx]);
-            solve(a, target, idx, res, tmp);
-            target += a[idx];
-            tmp.remove(tmp.size() - 1);
 
-        }
-        solve(a, target, idx + 1, res, tmp);
-        return ;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
 
+        List<List<Integer>> result = new ArrayList<>();
+
+        backtrack(candidates, target, 0, new ArrayList<>(), result);
+
+        return result;
     }
-    public List<List<Integer>> combinationSum(int[] a, int target) {
 
-        n = a.length;
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> tmp = new ArrayList<>();
-        solve(a, target, 0, res, tmp);
-        return res;
+    private void backtrack(
+        int[] candidates,
+        int target,
+        int index,
+        List<Integer> current,
+        List<List<Integer>> result
+    ) {
+
+        // Base case: target achieved
+        if (target == 0) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+
+        // Explore candidates starting from index
+        for (int i = index; i < candidates.length; i++) {
+
+            // Pruning
+            if (candidates[i] > target) {
+                continue;
+            }
+
+            // Pick
+            current.add(candidates[i]);
+
+            // Same index because reuse is allowed
+            backtrack(
+                candidates,
+                target - candidates[i],
+                i,
+                current,
+                result
+            );
+
+            // Backtrack
+            current.remove(current.size() - 1);
+        }
     }
 }
